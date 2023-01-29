@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Game</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+      }
+      .top-bar .leaderboard {
+        background-color: #fff;
+        color: #000;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .top-bar .leaderboard a {
+        text-decoration: none;
+        color: rgb(158, 20, 128);
+      }
+      .gameArea .startScreen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 90vh;
+        background-color: #000;
+        color: #fff;
+      }
+      .hide {
+        display: none !important;
+      }
+      .car {
+        position: absolute;
+        height: 90px;
+        width: 40px;
+        bottom: 0px;
+        margin: auto;
+        content: url(car.png);
+      }
+      .gameScreen {
+        background-color: #000;
+        height: 90vh;
+        position: relative;
+        margin: auto;
+        width: 30vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="user-name">Zaid</div>
+      <div class="score-section">Score: <span class="score">0</span></div>
+      <div class="lives">Highest Score: 0</div>
+      <div class="leaderboard">
+        <a href="#">LeaderBoard</a>
+      </div>
+    </div>
+    <div class="gameArea">
+      <div class="startScreen">
+        <h1>Welcome to Game Screen</h1>
+        <p>Click anywhere to start the game</p>
+      </div>
+      <div class="gameScreen hide"></div>
+    </div>
+
+    <script>
+      let score = document.querySelector(".score");
+      let gameScreen = document.querySelector(".gameScreen");
+      let startScreen = document.querySelector(".startScreen");
+
+      startScreen.addEventListener("click", startGame);
+
+      document.addEventListener("keydown", keyPressed);
+      document.addEventListener("keyup", keyReleased);
+
+      let controls = {
+        ArrowUp: false,
+        ArrowDown: false,
+        ArrowLeft: false,
+        ArrowRight: false,
+      };
+
+      let player = {
+        speed: 5, // 5px per sec
+        score: 0,
+        start: false,
+      };
+
+      function start() {
+        console.log("Car");
+        let car = document.querySelector(".car");
+
+        if (player.start) {
+          car.style.top = requestAnimationFrame(start);
+        }
+      }
+
+      function keyPressed(e) {
+        console.log("Pressed", e.key);
+        if (controls.e.key !== undefined) {
+          controls[e.key] = true;
+          //   console.log(controls);
+        }
+      }
+
+      function keyReleased(e) {
+        console.log("Released", e.key);
+        if (controls.e.key !== undefined) {
+          controls[e.key] = false;
+          // console.log(controls);
+        }
+      }
+
+      // startScreen.classList.add('hide');
+      function startGame() {
+        console.log("Clicked");
+        player.start = true;
+        // add or remove a calss from certain element
+        //  console.log(startScreen.classList)
+        startScreen.classList.add("hide");
+        gameScreen.classList.remove("hide");
+
+        // create a car
+
+        let car = document.createElement("div");
+        car.setAttribute("class", "car");
+        // car.innerText = "Car";
+        car.style.left = "10px";
+        car.style.top = "10px";
+
+        car.style.backgroundColor = "red";
+        gameScreen.appendChild(car);
+
+        requestAnimationFrame(start);
+      }
+    </script>
+  </body>
+</html>
